@@ -13,8 +13,6 @@ import android.content.res.Configuration;
 import com.example.hello.vo.RefInvoke;
 
 public class MyApplication extends Application {
-	private long start;
-	private long end;
 	
 	static{
 		System.loadLibrary("load");
@@ -41,8 +39,8 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		// 如果源应用配置有Appliction对象，则替换为源应用Applicaiton，以便不影响源程序逻辑。  
-		String appClassName = "com.ncf.firstp2p.MobileApplication";
-		start = System.currentTimeMillis();
+		String appClassName = "com.example.hello.MyApplication";
+		
 		/**
          * 调用静态方法android.app.ActivityThread.currentActivityThread
          * 获取当前activity所在的线程对象
@@ -110,8 +108,6 @@ public class MyApplication extends Application {
         RefInvoke.setFieldOjbect("android.app.ActivityThread",  
                 "mInitialApplication", currentActivityThread, app);  
 
-        end = System.currentTimeMillis();
-        System.out.println("替换进程spent time is " + (end - start) + "ms");
 //        Map mProviderMap = (Map) RefInvoke.getFieldOjbect(  
 //                "android.app.ActivityThread", currentActivityThread,  
 //                "mProviderMap");  
@@ -127,11 +123,8 @@ public class MyApplication extends Application {
         if(null == app){
 //            Log.e(TAG, "application get is null !");
         }else{
-        	start = System.currentTimeMillis();
             app.onCreate();
         }
-        end = System.currentTimeMillis();
-        System.out.println("启动新进程spent time is " + (end - start) + "ms");
 	}
 
 	@Override
